@@ -19,7 +19,8 @@ struct Main: Decodable {
     let temp: Double
 }
 
-// Weather structure to refer to weather description in JSON format API data
+// Weather structure to refer to weather description and id (weather condition code) in JSON format API data
 struct Weather: Decodable {
     let description: String
+    let id: Int
 }
