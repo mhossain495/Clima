@@ -49,7 +49,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         // Use search TextField.text to get the weather for that city
         
-        
+        // Optional binding to pass search text field value to a constant and use constant
         if let city = searchTextField.text {
             weatherManager.fetchWeather(cityName: city)
         }
