@@ -13,7 +13,13 @@ struct WeatherModel {
     let cityName: String
     let temperature: Double
     
-    // computed property
+    // computed property to return 1 decimal point temperature as String to a variable
+    var temperatureString: String {
+        return String(format: "%.1f", temperature)
+        
+    }
+    
+    // computed property to return weather condition as String to a variable
     var conditionName: String {
         switch conditionId {
         case 200...232:
