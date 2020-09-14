@@ -52,17 +52,23 @@ struct WeatherManager {
     }
 }
 
+    // parsing JSON data to convert data into a Swift object
 func parseJSON(_ weatherData: Data) -> WeatherModel? {
     let decoder = JSONDecoder()
+    // do keyword starts the block of code that contains method that can throw an error
     do {
-        let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
+        // decode JSON data and create WeatherData object by providing WeatherData structure as a data type using .self
+        // decodedData constant is of type WeatherData structure
+        let decodedData = try decoder.decode(WeatherData.self, from: weatherData) // try must be used in front of method that throws error
+        
+        //decoded data is of type WeatherData structure thus properties of WeatherData structure can be used
         let id = decodedData.weather[0].id
         let temp = decodedData.main.temp
         let name = decodedData.name
         let weather = WeatherModel(conditionId: id, cityName: name, temperature: temp)
         return weather
         
-        
+    // do-catch to handle error returns from try decode function. If the throwing method fails and raises an error, the execution will then be handled by catch block
     } catch {
         delegate?.didFailWithError(error: error)
         return nil

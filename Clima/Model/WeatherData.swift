@@ -8,10 +8,13 @@
 
 import Foundation
 
+// Property names in structures must match property names in JSON data
+// Below structures decode JSON data
+
 struct WeatherData: Codable {
     let name: String
     let main: Main
-    let weather: [Weather]
+    let weather: [Weather] //JSON weather property is in array format
 }
 
 // Main structure to refer to Main in JSON format API data
