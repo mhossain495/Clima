@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
@@ -18,8 +19,15 @@ struct WeatherManager {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=9defa614b51ba57cf819dae2053bd422&units=metric"
     var delegate: WeatherManagerDelegate?
     
+    // obtain weather data based on city name
     func fetchWeather(cityName: String) {
         let urlString = "\(weatherURL)&q=\(cityName)"
+        performRequest(with: urlString)
+    }
+    
+    // obtain weather data based based on latitude and longitude
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
         performRequest(with: urlString)
     }
     
@@ -46,7 +54,7 @@ struct WeatherManager {
             }
         }
         
-        //4. Start the task
+        //4. Start the task *task.resume needed or else network request won't execute
         
         task.resume()
     }
