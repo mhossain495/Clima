@@ -14,6 +14,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
+
     
     
     var weatherManager = WeatherManager()
@@ -28,6 +29,8 @@ class WeatherViewController: UIViewController {
        // locationManager.delegate = self must be written first
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        
+        // one time location request
         locationManager.requestLocation()
         
          // setting the current class, WeatherViewController as delegate
@@ -35,6 +38,14 @@ class WeatherViewController: UIViewController {
         searchTextField.delegate = self
     
     }
+    
+    // get weather of current location with requestLocation()
+    @IBAction func locationButtonPressed(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+    
+    
+    
 }
 
 //MARK: - UITextFieldDelegate
@@ -107,7 +118,9 @@ func didFailWithError(error: Error) {
 extension WeatherViewController: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // obtain last element in array of locations
         if let location = locations.last {
+            locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
             weatherManager.fetchWeather(latitude: lat, longitude: lon)
@@ -120,3 +133,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
 
 }
+
+
+
